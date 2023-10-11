@@ -32,15 +32,15 @@ type {{.Name}} interface {
 	// In {{$lang}}, this message translates to: {{$val}}
 		{{- end}}
 		{{- with .Placeholders}}
-	{{(Title $jsonName)}}({{(PlaceholderTypes .)}}) string
+	{{(Title (CamelCase $jsonName))}}({{(PlaceholderTypes .)}}) string
 		{{- else}}
-	{{(Title $jsonName)}}() string
+	{{(Title (CamelCase $jsonName))}}() string
 		{{- end}}
 	{{- else}}
 	// No definition provided for @{{$jsonName}}
 	//
 	// In {{$lang}}, this message translates to: {{$val}}
-	{{(Title $jsonName)}}() string
+	{{(Title (CamelCase $jsonName))}}() string
 	{{- end}}
 {{- end}}
 {{- end }}

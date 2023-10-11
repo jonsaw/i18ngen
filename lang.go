@@ -32,7 +32,7 @@ type {{$name}} struct {}
 {{- if not (StartsWith $jsonName "@")}}
 {{- with (GetDefinition $fields $jsonName) }}
 {{- with .Placeholders}}
-func (l *{{$name}}) {{(Title $jsonName)}}({{(PlaceholderTypes .)}}) string {
+func (l *{{$name}}) {{(Title (CamelCase $jsonName))}}({{(PlaceholderTypes .)}}) string {
 	t, err := template.New("").Parse("{{GetTranslation $translations $jsonName}}")
 	if err != nil {
 		return "{{$jsonName}}"
@@ -49,12 +49,12 @@ func (l *{{$name}}) {{(Title $jsonName)}}({{(PlaceholderTypes .)}}) string {
 	return b.String()
 }
 {{- else}}
-func (l *{{$name}}) {{(Title $jsonName)}}() string {
+func (l *{{$name}}) {{(Title (CamelCase $jsonName))}}() string {
 	return "{{GetTranslation $translations $jsonName}}"
 }
 {{- end}}
 {{- else}}
-func (l *{{$name}}) {{(Title $jsonName)}}() string {
+func (l *{{$name}}) {{(Title (CamelCase $jsonName))}}() string {
 	return "{{GetTranslation $translations $jsonName}}"
 }
 {{- end}}

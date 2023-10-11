@@ -20,8 +20,9 @@ func templateFns() template.FuncMap {
 			return strings.ToUpper(v[0:1]) + v[1:]
 		},
 		"CamelCase": func(v string) string {
-			v = regexp.MustCompile("[^a-zA-Z0-9_ ]+").ReplaceAllString(v, "")
+			v = regexp.MustCompile("[^a-zA-Z0-9_ -]+").ReplaceAllString(v, "")
 			v = strings.ReplaceAll(v, "_", " ")
+			v = strings.ReplaceAll(v, "-", " ")
 			v = cases.Title(language.AmericanEnglish, cases.NoLower).String(v)
 			v = strings.ReplaceAll(v, " ", "")
 			if len(v) > 0 {
