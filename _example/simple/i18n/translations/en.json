@@ -1,0 +1,13 @@
+{
+    "home": "Home",
+    "confirmationSentToEmail": "Confirmation sent to {{.email}}",
+    "@confirmationSentToEmail": {
+        "description": "Confirmation sent to message",
+        "placeholders": {
+            "email": {
+                "type": "string",
+                "example": "email@email.com"
+            }
+        }
+    }
+}

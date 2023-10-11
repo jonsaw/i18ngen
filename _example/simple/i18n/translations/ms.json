@@ -1,0 +1,4 @@
+{
+    "home": "Laman utama",
+    "confirmationSentToEmail": "Konfirmasi telah dikirim ke emel {{.email}}"
+}
