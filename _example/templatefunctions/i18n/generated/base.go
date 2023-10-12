@@ -5,14 +5,10 @@ package generated
 import "html/template"
 
 type Base interface {
-	// No definition provided for @home
+	// Emphasized welcome message
 	//
-	// In en, this message translates to: Home
-	Home() string
-	// No definition provided for @ourStory
-	//
-	// In en, this message translates to: Our story
-	OurStory() string
+	// In en, this message translates to: Welcome {{.name | ToUpper}}!
+	Welcome(name string) string
 }
 
 // Load loads the translation for the given language.

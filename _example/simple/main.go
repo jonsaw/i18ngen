@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	fmt.Println(i18ngen.Load("en").ConfirmationSentToEmail("email@email.com"))
-	fmt.Println(i18ngen.Load("ms").ConfirmationSentToEmail("email@email.com"))
+	fmt.Println(i18ngen.Load("en", nil).OurStory())
+	fmt.Println(i18ngen.Load("ms", nil).OurStory())
 }
