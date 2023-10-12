@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"html/template"
 	"reflect"
 	"regexp"
@@ -10,6 +9,18 @@ import (
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
+
+func uniqueSliceElements[T comparable](inputSlice []T) []T {
+	uniqueSlice := make([]T, 0, len(inputSlice))
+	seen := make(map[T]bool, len(inputSlice))
+	for _, element := range inputSlice {
+		if !seen[element] {
+			uniqueSlice = append(uniqueSlice, element)
+			seen[element] = true
+		}
+	}
+	return uniqueSlice
+}
 
 func templateFns() template.FuncMap {
 	return template.FuncMap{
@@ -39,30 +50,19 @@ func templateFns() template.FuncMap {
 		"StartsWith": func(v string, prefix string) bool {
 			return strings.HasPrefix(v, prefix)
 		},
-		"GetDefinition": func(fields map[string]interface{}, key string) *Definition {
-			v, ok := fields["@"+key]
+		"GetDefinition": func(fields map[string]Definition, key string) *Definition {
+			d, ok := fields["@"+key]
 			if !ok {
 				return nil
 			}
-
-			b, err := json.Marshal(v)
-			if err != nil {
-				return nil
-			}
-
-			d := &Definition{}
-			err = json.Unmarshal(b, d)
-			if err != nil {
-				return nil
-			}
-			return d
+			return &d
 		},
-		"GetTranslation": func(translations map[string]interface{}, key string) string {
+		"GetTranslation": func(translations map[string]string, key string) string {
 			v, ok := translations[key]
 			if !ok {
 				return key
 			}
-			return v.(string)
+			return v
 		},
 		"PlaceholderTypes": func(d map[string]Placeholder) string {
 			var types []string
