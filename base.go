@@ -68,6 +68,56 @@ func Load(lang string, funcMap template.FuncMap) {{.Name}} {
 	}
 	return &Translation{{(Title (CamelCase .Lang))}}{TemplateFuncMap: funcMap}
 }
+
+type LangMap map[string]string
+
+func (m LangMap) Get(key string) (string, error) {
+	if val, ok := m[key]; ok {
+		return val, nil
+	}
+
+	return "", fmt.Errorf("key %q not found", key)
+}
+
+func (m LangMap) MustGet(key string) string {
+	val, err := m.Get(key)
+	if err != nil {
+		return key
+	}
+
+	return val
+}
+
+func (m LangMap) GetTemplated(key string, values map[string]interface{}, templateFunc template.FuncMap) (string, error) {
+	val, err := m.Get(key)
+	if err != nil {
+		return "", err
+	}
+
+	t := template.New("")
+	if templateFunc != nil {
+		t = t.Funcs(templateFunc)
+	}
+	t, err = t.Parse(val)
+	if err != nil {
+		return "", err
+	}
+	var b strings.Builder
+	err = t.Execute(&b, values)
+	if err != nil {
+		return "", err
+	}
+	return b.String(), nil
+}
+
+func (m LangMap) MustGetTemplated(key string, values map[string]interface{}, templateFunc template.FuncMap) string {
+	val, err := m.GetTemplated(key, values, templateFunc)
+	if err != nil {
+		return key
+	}
+
+	return val
+}
 `
 }
 
@@ -93,6 +143,8 @@ func generateBase(config Config, langs []string) error {
 
 	imports := []string{
 		"html/template",
+		"strings",
+		"fmt",
 	}
 	baseTranslations := map[string]string{}
 	definitions := map[string]Definition{}

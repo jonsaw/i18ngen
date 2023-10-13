@@ -23,6 +23,7 @@ import (
 {{- end}}
 )
 {{- else if gt (len .) 0}}
+
 import "{{(index . 0)}}"
 {{- end}}
 {{- end}}
@@ -41,36 +42,33 @@ type {{$name}} struct {
 {{- with (GetDefinition $definitions $jsonName) }}
 {{- with .Placeholders}}
 func (l *{{$name}}) {{(Title (CamelCase $jsonName))}}({{(PlaceholderTypes .)}}) string {
-	t := template.New("")
-	if l.TemplateFuncMap != nil {
-		t = t.Funcs(l.TemplateFuncMap)
-	}
-	t, err := t.Parse("{{GetTranslation $translations $jsonName}}")
-	if err != nil {
-		return "{{$jsonName}}"
-	}
-	var b strings.Builder
-	err = t.Execute(&b, map[string]interface{}{
-		{{- range $placeholderName, $placeholder := .}}
-		"{{$placeholderName}}": {{$placeholderName}},
-		{{- end}}
-	})
-	if err != nil {
-		return "{{$jsonName}}"
-	}
-	return b.String()
+	return Translation{{(Title (CamelCase $lang))}}Map.MustGetTemplated(
+		"{{$jsonName}}",
+		map[string]interface{}{
+			{{- range $placeholderName, $placeholder := .}}
+			"{{$placeholderName}}": {{$placeholderName}},
+			{{- end}}
+		},
+		l.TemplateFuncMap,
+	)
 }
 {{- else}}
 func (l *{{$name}}) {{(Title (CamelCase $jsonName))}}() string {
-	return "{{GetTranslation $translations $jsonName}}"
+	return Translation{{(Title (CamelCase $lang))}}Map.MustGet("{{$jsonName}}")
 }
 {{- end}}
 {{- else}}
 func (l *{{$name}}) {{(Title (CamelCase $jsonName))}}() string {
-	return "{{GetTranslation $translations $jsonName}}"
+	return Translation{{(Title (CamelCase $lang))}}Map.MustGet("{{$jsonName}}")
 }
 {{- end}}
 {{- end }}
+
+var Translation{{(Title (CamelCase $lang))}}Map = LangMap{
+	{{- range $jsonName, $val := .BaseTranslations}}
+	"{{$jsonName}}": "{{GetTranslation $translations $jsonName}}",
+	{{- end}}
+}
 `
 }
 
@@ -140,10 +138,6 @@ func generateLang(config Config, langFilepath string) error {
 			}
 
 			definitions[k] = d
-
-			if d.Placeholders != nil && len(d.Placeholders) > 0 {
-				imports = append(imports, "strings")
-			}
 		}
 	}
 
