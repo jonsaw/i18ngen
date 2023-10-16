@@ -1,0 +1,9 @@
+{
+    "email": "Emel",
+    "password": "Kata laluan",
+    "invalidRequired": "{{.label}} diperlukan",
+    "invalidGreaterThan": "{{.label}} mesti lebih besar daripada {{index .settings 0}}",
+    "invalidMinLength": "{{.label}} mesti sekurang {{index .settings 0}} abjad",
+    "invalidAlreadyInUse": "{{.label}} sudah diguna",
+    "invalidAlreadyRegistered": "{{.label}} sudah wujud"
+}

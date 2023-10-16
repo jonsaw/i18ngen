@@ -13,6 +13,10 @@ type Base interface {
 	//
 	// In en, this message translates to: Confirmation sent to {{.email}}
 	ConfirmationSentToEmail(email string) string
+	// Welcome message
+	//
+	// In en, this message translates to: Dear {{.Name}}, welcome to {{.appName}}
+	WelcomeMessage(name string, appName string) string
 }
 
 // Load loads the translation for the given language.
@@ -25,6 +29,19 @@ func Load(lang string, funcMap template.FuncMap) Base {
 		return &TranslationMs{TemplateFuncMap: funcMap}
 	}
 	return &TranslationEn{TemplateFuncMap: funcMap}
+}
+
+// LoadLangMap loads the translation map for the given language.
+// Typlically used to dynamically load translations by key.
+// Defaults to base language if not found.
+func LoadLangMap(lang string) LangMap {
+	switch lang {
+	case "en":
+		return TranslationEnMap
+	case "ms":
+		return TranslationMsMap
+	}
+	return TranslationEnMap
 }
 
 type LangMap map[string]string
@@ -46,7 +63,7 @@ func (m LangMap) MustGet(key string) string {
 	return val
 }
 
-func (m LangMap) GetTemplated(key string, values map[string]interface{}, templateFunc template.FuncMap) (string, error) {
+func (m LangMap) GetTemplated(key string, values interface{}, templateFunc template.FuncMap) (string, error) {
 	val, err := m.Get(key)
 	if err != nil {
 		return "", err
@@ -68,7 +85,7 @@ func (m LangMap) GetTemplated(key string, values map[string]interface{}, templat
 	return b.String(), nil
 }
 
-func (m LangMap) MustGetTemplated(key string, values map[string]interface{}, templateFunc template.FuncMap) string {
+func (m LangMap) MustGetTemplated(key string, values interface{}, templateFunc template.FuncMap) string {
 	val, err := m.GetTemplated(key, values, templateFunc)
 	if err != nil {
 		return key

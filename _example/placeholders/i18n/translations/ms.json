@@ -1,3 +1,4 @@
 {
-    "confirmationSentToEmail": "Emel konfirmasi dihantar ke {{.email}}"
+    "confirmationSentToEmail": "Emel konfirmasi dihantar ke {{.email}}",
+    "welcomeMessage": "{{.Name}}, selamat datang ke applikasi {{.appName}}"
 }

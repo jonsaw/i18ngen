@@ -45,8 +45,8 @@ func (l *{{$name}}) {{(Title (CamelCase $jsonName))}}({{(PlaceholderTypes .)}}) 
 	return Translation{{(Title (CamelCase $lang))}}Map.MustGetTemplated(
 		"{{$jsonName}}",
 		map[string]interface{}{
-			{{- range $placeholderName, $placeholder := .}}
-			"{{$placeholderName}}": {{$placeholderName}},
+			{{- range $idx, $placeholder := .}}
+			"{{$placeholder.Label}}": {{CamelCase $placeholder.Label}},
 			{{- end}}
 		},
 		l.TemplateFuncMap,

@@ -1,13 +1,14 @@
 package main
 
 type Placeholder struct {
+	Label   string `json:"label"`
 	Type    string `json:"type"`
 	Example string `json:"example"`
 }
 
 type Definition struct {
-	Description  string                 `json:"description"`
-	Placeholders map[string]Placeholder `json:"placeholders"`
+	Description  string        `json:"description"`
+	Placeholders []Placeholder `json:"placeholders"`
 }
 
 func main() {

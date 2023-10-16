@@ -2,11 +2,12 @@
     "welcome": "Welcome {{.name | ToUpper}}!",
     "@welcome": {
         "description": "Emphasized welcome message",
-        "placeholders": {
-            "name": {
+        "placeholders": [
+            {
+                "label": "name",
                 "type": "string",
                 "example": "John Doe"
             }
-        }
+        ]
     }
 }

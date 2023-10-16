@@ -9,14 +9,34 @@ import (
 )
 
 type Base interface {
-	// No definition provided for @home
+	// No definition provided for @email
 	//
-	// In en, this message translates to: Home
-	Home() string
-	// No definition provided for @ourStory
+	// In en, this message translates to: Email
+	Email() string
+	// Confirmation sent to message
 	//
-	// In en, this message translates to: Our story
-	OurStory() string
+	// In en, this message translates to: {{.label}} already in use
+	InvalidAlreadyInUse(label string) string
+	// Confirmation sent to message
+	//
+	// In en, this message translates to: {{.label}} already registered
+	InvalidAlreadyRegistered(label string) string
+	// Confirmation sent to message
+	//
+	// In en, this message translates to: {{.label}} must be greater than {{index .settings 0}}
+	InvalidGreaterThan(label string, settings []string) string
+	// Confirmation sent to message
+	//
+	// In en, this message translates to: {{.label}} must have min length {{index .settings 0}}
+	InvalidMinLength(label string, settings []string) string
+	// Confirmation sent to message
+	//
+	// In en, this message translates to: {{.label}} is required
+	InvalidRequired(label string) string
+	// No definition provided for @password
+	//
+	// In en, this message translates to: Password
+	Password() string
 }
 
 // Load loads the translation for the given language.

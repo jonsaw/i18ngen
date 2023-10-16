@@ -2,11 +2,28 @@
     "confirmationSentToEmail": "Confirmation sent to {{.email}}",
     "@confirmationSentToEmail": {
         "description": "Confirmation sent to message",
-        "placeholders": {
-            "email": {
+        "placeholders": [
+            {
+                "label": "email",
                 "type": "string",
                 "example": "email@email.com"
             }
-        }
+        ]
+    },
+    "welcomeMessage": "Dear {{.Name}}, welcome to {{.appName}}",
+    "@welcomeMessage": {
+        "description": "Welcome message",
+        "placeholders": [
+            {
+                "label": "Name",
+                "type": "string",
+                "example": "John Doe"
+            },
+            {
+                "label": "appName",
+                "type": "string",
+                "example": "My App"
+            }
+        ]
     }
 }

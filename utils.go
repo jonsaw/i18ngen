@@ -22,6 +22,18 @@ func uniqueSliceElements[T comparable](inputSlice []T) []T {
 	return uniqueSlice
 }
 
+func CamelCase(v string) string {
+	v = regexp.MustCompile("[^a-zA-Z0-9_ -]+").ReplaceAllString(v, "")
+	v = strings.ReplaceAll(v, "_", " ")
+	v = strings.ReplaceAll(v, "-", " ")
+	v = cases.Title(language.AmericanEnglish, cases.NoLower).String(v)
+	v = strings.ReplaceAll(v, " ", "")
+	if len(v) > 0 {
+		v = strings.ToLower(v[:1]) + v[1:]
+	}
+	return v
+}
+
 func templateFns() template.FuncMap {
 	return template.FuncMap{
 		"Title": func(v string) string {
@@ -30,17 +42,7 @@ func templateFns() template.FuncMap {
 			}
 			return strings.ToUpper(v[0:1]) + v[1:]
 		},
-		"CamelCase": func(v string) string {
-			v = regexp.MustCompile("[^a-zA-Z0-9_ -]+").ReplaceAllString(v, "")
-			v = strings.ReplaceAll(v, "_", " ")
-			v = strings.ReplaceAll(v, "-", " ")
-			v = cases.Title(language.AmericanEnglish, cases.NoLower).String(v)
-			v = strings.ReplaceAll(v, " ", "")
-			if len(v) > 0 {
-				v = strings.ToLower(v[:1]) + v[1:]
-			}
-			return v
-		},
+		"CamelCase": CamelCase,
 		"TypeOf": func(v interface{}) string {
 			if v == nil {
 				return "string"
@@ -64,10 +66,10 @@ func templateFns() template.FuncMap {
 			}
 			return v
 		},
-		"PlaceholderTypes": func(d map[string]Placeholder) string {
+		"PlaceholderTypes": func(d []Placeholder) string {
 			var types []string
-			for k, v := range d {
-				types = append(types, k+" "+v.Type)
+			for _, v := range d {
+				types = append(types, CamelCase(v.Label)+" "+v.Type)
 			}
 			return strings.Join(types, ", ")
 		},

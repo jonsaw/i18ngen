@@ -17,7 +17,18 @@ func (l *TranslationMs) ConfirmationSentToEmail(email string) string {
 		l.TemplateFuncMap,
 	)
 }
+func (l *TranslationMs) WelcomeMessage(name string, appName string) string {
+	return TranslationMsMap.MustGetTemplated(
+		"welcomeMessage",
+		map[string]interface{}{
+			"Name": name,
+			"appName": appName,
+		},
+		l.TemplateFuncMap,
+	)
+}
 
 var TranslationMsMap = LangMap{
 	"confirmationSentToEmail": "Emel konfirmasi dihantar ke {{.email}}",
+	"welcomeMessage": "{{.Name}}, selamat datang ke applikasi {{.appName}}",
 }

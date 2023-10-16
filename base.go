@@ -69,6 +69,19 @@ func Load(lang string, funcMap template.FuncMap) {{.Name}} {
 	return &Translation{{(Title (CamelCase .Lang))}}{TemplateFuncMap: funcMap}
 }
 
+// LoadLangMap loads the translation map for the given language.
+// Typlically used to dynamically load translations by key.
+// Defaults to base language if not found.
+func LoadLangMap(lang string) LangMap {
+	switch lang {
+	{{- range $lang := .Langs}}
+	case "{{$lang}}":
+		return Translation{{(Title (CamelCase $lang))}}Map
+	{{- end}}
+	}
+	return Translation{{(Title (CamelCase .Lang))}}Map
+}
+
 type LangMap map[string]string
 
 func (m LangMap) Get(key string) (string, error) {
@@ -88,7 +101,7 @@ func (m LangMap) MustGet(key string) string {
 	return val
 }
 
-func (m LangMap) GetTemplated(key string, values map[string]interface{}, templateFunc template.FuncMap) (string, error) {
+func (m LangMap) GetTemplated(key string, values interface{}, templateFunc template.FuncMap) (string, error) {
 	val, err := m.Get(key)
 	if err != nil {
 		return "", err
@@ -110,7 +123,7 @@ func (m LangMap) GetTemplated(key string, values map[string]interface{}, templat
 	return b.String(), nil
 }
 
-func (m LangMap) MustGetTemplated(key string, values map[string]interface{}, templateFunc template.FuncMap) string {
+func (m LangMap) MustGetTemplated(key string, values interface{}, templateFunc template.FuncMap) string {
 	val, err := m.GetTemplated(key, values, templateFunc)
 	if err != nil {
 		return key

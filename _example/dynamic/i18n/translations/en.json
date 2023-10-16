@@ -1,0 +1,69 @@
+{
+    "email": "Email",
+    "password": "Password",
+    "invalidRequired": "{{.label}} is required",
+    "@invalidRequired": {
+        "description": "Confirmation sent to message",
+        "placeholders": [
+            {
+                "label": "label",
+                "type": "string",
+                "example": "Name"
+            }
+        ]
+    },
+    "invalidGreaterThan": "{{.label}} must be greater than {{index .settings 0}}",
+    "@invalidGreaterThan": {
+        "description": "Confirmation sent to message",
+        "placeholders": [
+            {
+                "label": "label",
+                "type": "string",
+                "example": "Name"
+            },
+            {
+                "label": "settings",
+                "type": "[]string",
+                "example": "[\"10\"]"
+            }
+        ]
+    },
+    "invalidMinLength": "{{.label}} must have min length {{index .settings 0}}",
+    "@invalidMinLength": {
+        "description": "Confirmation sent to message",
+        "placeholders": [
+            {
+                "label": "label",
+                "type": "string",
+                "example": "Name"
+            },
+            {
+                "label": "settings",
+                "type": "[]string",
+                "example": "[\"10\"]"
+            }
+        ]
+    },
+    "invalidAlreadyInUse": "{{.label}} already in use",
+    "@invalidAlreadyInUse": {
+        "description": "Confirmation sent to message",
+        "placeholders": [
+            {
+                "label": "label",
+                "type": "string",
+                "example": "Name"
+            }
+        ]
+    },
+    "invalidAlreadyRegistered": "{{.label}} already registered",
+    "@invalidAlreadyRegistered": {
+        "description": "Confirmation sent to message",
+        "placeholders": [
+            {
+                "label": "label",
+                "type": "string",
+                "example": "Name"
+            }
+        ]
+    }
+}
