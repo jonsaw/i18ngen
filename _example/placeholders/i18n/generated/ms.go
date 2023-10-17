@@ -27,8 +27,18 @@ func (l *TranslationMs) WelcomeMessage(name string, appName string) string {
 		l.TemplateFuncMap,
 	)
 }
+func (l *TranslationMs) YourOTPIs(otp string) string {
+	return TranslationMsMap.MustGetTemplated(
+		"yourOTPIs",
+		map[string]interface{}{
+			"OTP": otp,
+		},
+		l.TemplateFuncMap,
+	)
+}
 
 var TranslationMsMap = LangMap{
 	"confirmationSentToEmail": "Emel konfirmasi dihantar ke {{.email}}",
 	"welcomeMessage": "{{.Name}}, selamat datang ke applikasi {{.appName}}",
+	"yourOTPIs": "Kod OTP anda adalah {{.OTP}}",
 }

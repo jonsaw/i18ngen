@@ -17,6 +17,10 @@ type Base interface {
 	//
 	// In en, this message translates to: Dear {{.Name}}, welcome to {{.appName}}
 	WelcomeMessage(name string, appName string) string
+	// Your OTP is message
+	//
+	// In en, this message translates to: Your OTP is {{.OTP}}
+	YourOTPIs(otp string) string
 }
 
 // Load loads the translation for the given language.

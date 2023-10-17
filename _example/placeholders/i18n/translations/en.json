@@ -25,5 +25,16 @@
                 "example": "My App"
             }
         ]
+    },
+    "yourOTPIs": "Your OTP is {{.OTP}}",
+    "@yourOTPIs": {
+        "description": "Your OTP is message",
+        "placeholders": [
+            {
+                "label": "OTP",
+                "type": "string",
+                "example": "123456"
+            }
+        ]
     }
 }

@@ -9,6 +9,8 @@ import (
 func main() {
 	fmt.Println(i18ngen.Load("en", nil).ConfirmationSentToEmail("email@email.com"))
 	fmt.Println(i18ngen.Load("ms", nil).ConfirmationSentToEmail("email@email.com"))
+	fmt.Println(i18ngen.Load("en", nil).YourOTPIs("123456"))
 	fmt.Println(i18ngen.Load("en", nil).WelcomeMessage("John Doe", "My App"))
 	fmt.Println(i18ngen.Load("ms", nil).WelcomeMessage("John Doe", "My App"))
+	fmt.Println(i18ngen.Load("ms", nil).YourOTPIs("123456"))
 }

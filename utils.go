@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
+	"unicode"
 
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
@@ -23,6 +24,10 @@ func uniqueSliceElements[T comparable](inputSlice []T) []T {
 }
 
 func CamelCase(v string) string {
+	if IsUpper(v) {
+		return strings.ToLower(v)
+	}
+
 	v = regexp.MustCompile("[^a-zA-Z0-9_ -]+").ReplaceAllString(v, "")
 	v = strings.ReplaceAll(v, "_", " ")
 	v = strings.ReplaceAll(v, "-", " ")
@@ -32,6 +37,15 @@ func CamelCase(v string) string {
 		v = strings.ToLower(v[:1]) + v[1:]
 	}
 	return v
+}
+
+func IsUpper(s string) bool {
+	for _, r := range s {
+		if !unicode.IsUpper(r) && unicode.IsLetter(r) {
+			return false
+		}
+	}
+	return true
 }
 
 func templateFns() template.FuncMap {

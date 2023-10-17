@@ -1,4 +1,5 @@
 {
     "confirmationSentToEmail": "Emel konfirmasi dihantar ke {{.email}}",
-    "welcomeMessage": "{{.Name}}, selamat datang ke applikasi {{.appName}}"
+    "welcomeMessage": "{{.Name}}, selamat datang ke applikasi {{.appName}}",
+    "yourOTPIs": "Kod OTP anda adalah {{.OTP}}"
 }
