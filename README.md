@@ -25,13 +25,13 @@ Inspired by [Flutter localizations](https://docs.flutter.dev/ui/accessibility-an
     ```
 1. Install dependency
     ```
-    go get github.com/jonsaw/i18ngen generate
+    go get github.com/jonsaw/i18ngen
     ```
 1. In your project folder, create a subfolder to house your translations (ie., `./i18n`).
 1. Create a file name `i18n.go` in your `./i18n` subfolder (ie., `./i18n/i18n.go`)
 1. Insert the following contents into `i18n.go`.
     ```go
-    //go:generate go run github.com/jonsaw/i18ngen
+    //go:generate go run github.com/jonsaw/i18ngen generate
     package i18n
     ```
 1. Create a file name i18ngen.yml in your subfolder (ie., `./i18n/i18ngen.yml`).
